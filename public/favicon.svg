@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <title>Yasiru Lansakara</title>
+  <rect width="64" height="64" rx="14" fill="#0B0F14"/>
+  <path d="M26 14 L43 27 M38 14 L21 27" fill="none" stroke="#5EEAD4" stroke-width="1.2" opacity="0.35"/>
+  <path d="M14 14 L21 27 M26 14 L21 27 M38 14 L43 27 M50 14 L43 27" fill="none" stroke="#5EEAD4" stroke-width="2" stroke-linecap="round" opacity="0.75"/>
+  <path d="M21 27 L32 39 L43 27 M32 39 L32 51" fill="none" stroke="#5EEAD4" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="14" cy="14" r="2.6" fill="#7C9CFF"/>
+  <circle cx="26" cy="14" r="2.6" fill="#7C9CFF"/>
+  <circle cx="38" cy="14" r="2.6" fill="#7C9CFF"/>
+  <circle cx="50" cy="14" r="2.6" fill="#7C9CFF"/>
+  <circle cx="21" cy="27" r="3.6" fill="#5EEAD4"/>
+  <circle cx="43" cy="27" r="3.6" fill="#5EEAD4"/>
+  <circle cx="32" cy="39" r="3.6" fill="#5EEAD4"/>
+  <circle cx="32" cy="51" r="7" fill="none" stroke="#7C9CFF" stroke-width="1.2" opacity="0.45"/>
+  <circle cx="32" cy="51" r="4" fill="#7C9CFF"/>
+</svg>

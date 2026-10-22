@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+/* Toggle dark: utilities off the .dark class (set by useTheme) instead of the OS media query. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+
+  /* Semantic color tokens — values are set per-theme below, outside @theme,
+     so the generated utilities (bg-canvas, text-ink, etc.) stay reactive
+     to the .light class swap at runtime. */
+  --color-canvas: #0a0e1a;
+  --color-canvas-raised: #0d1220;
+  --color-panel: #11172a;
+  --color-panel-hover: #161d33;
+  --color-line: #242b40;
+  --color-ink: #e9ebf2;
+  --color-ink-muted: #8d94a8;
+  --color-ink-faint: #5c6478;
+  --color-violet: #8b7bf7;
+  --color-violet-soft: #a594ff;
+  --color-cyan: #4fd8e8;
+  --color-danger: #f17272;
+
+  --breakpoint-xs: 22.5rem;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+:root,
+:root.dark {
+  --color-canvas: #0a0e1a;
+  --color-canvas-raised: #0d1220;
+  --color-panel: #11172a;
+  --color-panel-hover: #161d33;
+  --color-line: #242b40;
+  --color-ink: #e9ebf2;
+  --color-ink-muted: #8d94a8;
+  --color-ink-faint: #5c6478;
+  --color-violet: #8b7bf7;
+  --color-violet-soft: #a594ff;
+  --color-cyan: #4fd8e8;
+}
+
+:root.light {
+  color-scheme: light;
+  --color-canvas: #f7f8fb;
+  --color-canvas-raised: #ffffff;
+  --color-panel: #ffffff;
+  --color-panel-hover: #f1f2f8;
+  --color-line: #e3e5ef;
+  --color-ink: #161a28;
+  --color-ink-muted: #565d72;
+  --color-ink-faint: #8990a3;
+  --color-violet: #6d4eef;
+  --color-violet-soft: #5a3de0;
+  --color-cyan: #0f93a8;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::selection {
+  background-color: var(--color-violet);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-violet-soft);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Subtle fixed grid texture behind all content */
+.bg-grid-texture {
+  background-image:
+    linear-gradient(to right, var(--color-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  opacity: 0.35;
+}
+
+:root.light .bg-grid-texture {
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
