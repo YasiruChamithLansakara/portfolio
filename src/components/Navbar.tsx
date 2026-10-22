@@ -3,13 +3,13 @@ import { AnimatePresence, motion } from 'motion/react'
 import { Menu, X } from 'lucide-react'
 import { navLinks } from '../data/portfolio'
 import { useActiveSection } from '../hooks/useActiveSection'
-import type { Theme } from '../hooks/useTheme'
+import type { Theme, ThemeTransitionOrigin } from '../hooks/useTheme'
 import { ThemeToggle } from './ThemeToggle'
 import { Container } from './Container'
 
 interface NavbarProps {
   theme: Theme
-  onToggleTheme: () => void
+  onToggleTheme: (origin?: ThemeTransitionOrigin) => void
 }
 
 export function Navbar({ theme, onToggleTheme }: NavbarProps) {
