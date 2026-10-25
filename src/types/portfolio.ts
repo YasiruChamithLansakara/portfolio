@@ -18,7 +18,10 @@ export interface AboutFact {
 
 export interface SkillCategory {
   title: string
+  /** Tools, libraries and languages — shown as chips */
   skills: string[]
+  /** Techniques applied with those tools — shown as a quieter line under the chips */
+  methods?: string[]
 }
 
 export type ProjectCategory = 'AI & ML' | 'Computer Vision' | 'Web Development' | 'Data & Remote Sensing'

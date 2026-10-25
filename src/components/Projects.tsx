@@ -30,14 +30,20 @@ export function Projects() {
           description="A selection of academic and independent projects spanning machine learning, computer vision, and full-stack development."
         />
 
-        <div className="mb-10 flex flex-wrap gap-2" role="group" aria-label="Filter projects by category">
+        {/* On phones the filters stay on one row that scrolls sideways (bleeding to the screen edge);
+            from sm up they wrap. py-1 leaves room for the focus outline inside the scroll area. */}
+        <div
+          className="-mx-5 mb-9 flex gap-2 overflow-x-auto px-5 py-1 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0"
+          role="group"
+          aria-label="Filter projects by category"
+        >
           {categories.map((category) => (
             <button
               key={category}
               type="button"
               onClick={() => setActiveFilter(category)}
               aria-pressed={activeFilter === category}
-              className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+              className={`shrink-0 rounded-full border px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors ${
                 activeFilter === category
                   ? 'border-violet bg-violet text-white'
                   : 'border-line text-ink-muted hover:border-violet/40 hover:text-ink'

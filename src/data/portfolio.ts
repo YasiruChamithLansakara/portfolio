@@ -59,74 +59,69 @@ export const about: { lead: string; paragraphs: string[]; facts: AboutFact[] } =
   ],
 }
 
+// Tools go in `skills` (shown as chips); techniques go in `methods` (a quieter line beneath).
+// Everything here should be backed by a project, the internship, or coursework.
 export const skillCategories: SkillCategory[] = [
   {
-    title: 'Programming Languages',
-    skills: ['Python', 'Java', 'JavaScript', 'TypeScript', 'C/C++', 'PHP'],
+    title: 'Languages',
+    skills: ['Python', 'TypeScript', 'JavaScript', 'Java', 'C/C++', 'PHP'],
   },
   {
-    title: 'AI & Machine Learning',
-    skills: [
-      'Scikit-learn',
-      'TensorFlow',
-      'XGBoost',
+    title: 'Machine Learning',
+    skills: ['Scikit-learn', 'TensorFlow', 'XGBoost'],
+    methods: [
       'Logistic Regression',
       'Random Forest',
-      'LSTM',
+      'SVM',
+      'Naive Bayes',
+      'CNNs',
+      'LSTMs',
       'Feature Engineering',
       'Model Evaluation',
-      'Natural Language Processing (NLP)',
     ],
   },
   {
-    title: 'Computer Vision & Remote Sensing',
-    skills: ['OpenCV', 'K-Means Image Segmentation', 'Satellite Imagery Analysis', 'Remote Sensing'],
+    title: 'Computer Vision & Geospatial',
+    skills: ['OpenCV', 'Tesseract', 'EasyOCR', 'GeoPandas', 'Rasterio'],
+    methods: [
+      'OCR',
+      'K-Means Image Segmentation',
+      'Satellite Imagery Analysis (Landsat)',
+      'Spectral Indices (NDVI, NDBI)',
+      'Remote Sensing',
+    ],
   },
   {
-    title: 'Data Science & Analysis',
-    skills: [
-      'Pandas',
-      'NumPy',
-      'Matplotlib',
-      'Jupyter Notebook',
-      'Data Preprocessing',
-      'Exploratory Data Analysis',
-      'Time-Series Analysis',
-      'Forecasting',
+    title: 'Speech & Language AI',
+    skills: ['FAISS', 'Gemini API'],
+    methods: [
+      'Speech-to-Text',
+      'Audio Processing',
+      'MFCC Features',
+      'Speech Emotion Classification',
+      'NLP',
+      'Vector Search',
+      'Chatbot Development',
     ],
+  },
+  {
+    title: 'Data & Forecasting',
+    skills: ['Pandas', 'NumPy', 'Matplotlib', 'Statsmodels', 'Prophet', 'Jupyter Notebook'],
+    methods: ['Data Preprocessing', 'Exploratory Data Analysis', 'Time-Series Forecasting (ARIMA, SARIMA)'],
   },
   {
     title: 'Web Development',
-    skills: [
-      'React',
-      'Vite',
-      'React Router',
-      'Node.js',
-      'Express.js',
-      'Flask',
-      'HTML5',
-      'CSS3',
-      'Axios',
-      'REST APIs',
-      'JWT Authentication',
-    ],
+    skills: ['React', 'Vite', 'React Router', 'Axios', 'Node.js', 'Express.js', 'FastAPI', 'Flask', 'HTML5', 'CSS3'],
+    methods: ['REST APIs', 'JWT Authentication'],
   },
   {
-    title: 'Databases',
-    skills: ['MySQL', 'MongoDB', 'Mongoose', 'Firebase'],
+    title: 'Databases & Cloud',
+    skills: ['MySQL', 'MongoDB', 'Mongoose', 'Firebase', 'AWS'],
   },
   {
-    title: 'Tools & Platforms',
-    skills: [
-      'Git',
-      'GitHub',
-      'Visual Studio Code',
-      'AWS',
-      'Arduino',
-      'Testing & Debugging',
-      'Technical Documentation',
-      'Agile Concepts',
-    ],
+    title: 'Tools & Practices',
+    skills: ['Git', 'GitHub', 'Visual Studio Code', 'Arduino'],
+    methods: ['Testing & Debugging', 'Technical Documentation', 'Agile'],
   },
 ]
 

@@ -39,7 +39,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.45, ease: 'easeOut' }}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-panel transition-colors hover:border-violet/40"
+      className={`group relative flex flex-col overflow-hidden rounded-2xl border border-line bg-panel transition-colors ${
+        project.githubUrl ? 'hover:border-violet/40 focus-within:border-violet/40' : ''
+      }`}
     >
       <div
         className={`relative flex h-44 items-center justify-center overflow-hidden bg-gradient-to-br ${categoryGradient[primaryCategory]}`}
@@ -60,7 +62,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
       <div className="flex flex-1 flex-col p-6">
         <div className="flex items-start justify-between gap-3">
-          <h3 className="text-lg font-semibold text-ink">{project.title}</h3>
+          {/* A no-break space keeps " — " on the first line, so a wrapped subtitle never starts with a dash. */}
+          <h3 className="text-lg font-semibold text-balance text-ink">{project.title.replace(' — ', ' — ')}</h3>
           {/* "Completed" is the default, so only call out projects that aren't. */}
           {project.status !== 'Completed' && (
             <span
@@ -73,43 +76,51 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
         <p className="mt-3 text-sm leading-relaxed text-ink-muted">{project.description}</p>
 
-        <div className="mt-5 mb-5 flex flex-wrap gap-1.5">
-          {project.tech.map((tech) => (
-            <span key={tech} className="rounded-md bg-canvas-raised px-2 py-1 text-xs text-ink-muted">
-              {tech}
-            </span>
-          ))}
-        </div>
+        {/* mt-auto pins tags and links to the card bottom so they line up across a grid row. */}
+        <div className="mt-auto flex items-end justify-between gap-4 pt-5">
+          <div className="flex flex-wrap gap-1.5">
+            {project.tech.map((tech) => (
+              <span
+                key={tech}
+                className="rounded-md bg-panel-hover px-2 py-1 text-xs text-ink-muted dark:bg-canvas-raised"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
 
-        {/* mt-auto pins the links row to the card bottom so it lines up across a grid row. */}
-        <div className="mt-auto flex items-center gap-4 border-t border-line pt-4">
-          {project.githubUrl ? (
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-muted transition-colors hover:text-violet"
-            >
-              <GithubIcon className="h-4 w-4" aria-hidden="true" />
-              Code
-            </a>
-          ) : (
-            <span className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-faint">
-              <GithubIcon className="h-4 w-4" aria-hidden="true" />
-              Private repo
-            </span>
-          )}
-          {project.liveUrl && (
-            <a
-              href={project.liveUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-muted transition-colors hover:text-violet"
-            >
-              <ExternalLink className="h-4 w-4" aria-hidden="true" />
-              Live demo
-            </a>
-          )}
+          <div className="flex shrink-0 items-center gap-4 pb-0.5">
+            {project.githubUrl ? (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`Code: ${project.title} on GitHub`}
+                // The ::after overlay stretches this link over the whole card, so the card itself is clickable.
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-muted transition-colors group-hover:text-violet after:absolute after:inset-0 after:content-['']"
+              >
+                <GithubIcon className="h-4 w-4" aria-hidden="true" />
+                Code
+              </a>
+            ) : (
+              <span className="inline-flex items-center gap-1.5 text-sm font-medium text-ink-faint">
+                <GithubIcon className="h-4 w-4" aria-hidden="true" />
+                Private repo
+              </span>
+            )}
+            {project.liveUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noreferrer"
+                // Sits above the card-wide Code overlay so it stays separately clickable.
+                className="relative z-10 inline-flex items-center gap-1.5 text-sm font-medium text-ink-muted transition-colors hover:text-violet"
+              >
+                <ExternalLink className="h-4 w-4" aria-hidden="true" />
+                Live demo
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </motion.article>
