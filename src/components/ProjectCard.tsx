@@ -26,10 +26,9 @@ const statusStyle: Record<Project['status'], string> = {
 
 interface ProjectCardProps {
   project: Project
-  wide?: boolean
 }
 
-export function ProjectCard({ project, wide = false }: ProjectCardProps) {
+export function ProjectCard({ project }: ProjectCardProps) {
   const primaryCategory = project.categories[0]
   const Icon = categoryIcon[primaryCategory]
   const Visual = projectVisuals[project.id]
@@ -40,9 +39,7 @@ export function ProjectCard({ project, wide = false }: ProjectCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.45, ease: 'easeOut' }}
-      className={`group flex flex-col overflow-hidden rounded-2xl border border-line bg-panel transition-colors hover:border-violet/40 ${
-        wide ? 'lg:col-span-2' : ''
-      }`}
+      className="group flex flex-col overflow-hidden rounded-2xl border border-line bg-panel transition-colors hover:border-violet/40"
     >
       <div
         className={`relative flex h-44 items-center justify-center overflow-hidden bg-gradient-to-br ${categoryGradient[primaryCategory]}`}
@@ -64,16 +61,19 @@ export function ProjectCard({ project, wide = false }: ProjectCardProps) {
       <div className="flex flex-1 flex-col p-6">
         <div className="flex items-start justify-between gap-3">
           <h3 className="text-lg font-semibold text-ink">{project.title}</h3>
-          <span
-            className={`shrink-0 rounded-full border px-2.5 py-1 text-[11px] font-medium ${statusStyle[project.status]}`}
-          >
-            {project.status}
-          </span>
+          {/* "Completed" is the default, so only call out projects that aren't. */}
+          {project.status !== 'Completed' && (
+            <span
+              className={`shrink-0 rounded-full border px-2.5 py-1 text-[11px] font-medium ${statusStyle[project.status]}`}
+            >
+              {project.status}
+            </span>
+          )}
         </div>
 
-        <p className="mt-3 flex-1 text-sm leading-relaxed text-ink-muted">{project.description}</p>
+        <p className="mt-3 text-sm leading-relaxed text-ink-muted">{project.description}</p>
 
-        <div className="mt-5 flex flex-wrap gap-1.5">
+        <div className="mt-5 mb-5 flex flex-wrap gap-1.5">
           {project.tech.map((tech) => (
             <span key={tech} className="rounded-md bg-canvas-raised px-2 py-1 text-xs text-ink-muted">
               {tech}
@@ -81,7 +81,8 @@ export function ProjectCard({ project, wide = false }: ProjectCardProps) {
           ))}
         </div>
 
-        <div className="mt-5 flex items-center gap-4 border-t border-line pt-4">
+        {/* mt-auto pins the links row to the card bottom so it lines up across a grid row. */}
+        <div className="mt-auto flex items-center gap-4 border-t border-line pt-4">
           {project.githubUrl ? (
             <a
               href={project.githubUrl}

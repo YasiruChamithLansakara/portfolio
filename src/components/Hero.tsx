@@ -98,7 +98,6 @@ export function Hero() {
         >
           <div className="absolute -inset-4 z-0 rounded-[2rem] bg-gradient-to-br from-violet/30 via-cyan/10 to-transparent blur-2xl" />
           <NetworkArtwork className="absolute -inset-6 z-0 h-[calc(100%+3rem)] w-[calc(100%+3rem)] text-ink-faint" />
-          <div className="absolute inset-x-8 bottom-6 z-0 h-10 rounded-full bg-black/30 blur-xl" aria-hidden="true" />
           <picture>
             <source srcSet={`${import.meta.env.BASE_URL}images/profile.webp`} type="image/webp" />
             <img
@@ -106,7 +105,8 @@ export function Hero() {
               alt={`Portrait of ${personal.name}`}
               width={760}
               height={950}
-              className="relative z-10 aspect-[4/5] w-full object-contain drop-shadow-2xl"
+              // The cutout ends in a hard horizontal crop; fade it into the background instead.
+              className="relative z-10 aspect-[4/5] w-full object-contain drop-shadow-2xl [mask-image:linear-gradient(to_bottom,black_78%,transparent)]"
               fetchPriority="high"
             />
           </picture>

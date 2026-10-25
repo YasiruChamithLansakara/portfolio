@@ -49,8 +49,8 @@ export function Projects() {
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((project, index) => (
-            <ProjectCard key={project.id} project={project} wide={index === 0 && activeFilter === 'All'} />
+          {filtered.map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
         </div>
 

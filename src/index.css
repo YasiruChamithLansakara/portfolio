@@ -51,7 +51,7 @@
   --color-canvas-raised: #ffffff;
   --color-panel: #ffffff;
   --color-panel-hover: #f1f2f8;
-  --color-line: #e3e5ef;
+  --color-line: #d6d9e6;
   --color-ink: #161a28;
   --color-ink-muted: #565d72;
   --color-ink-faint: #8990a3;
@@ -83,6 +83,18 @@ body {
   border-radius: 2px;
 }
 
+/* Sections have tall top padding (py-24 / sm:py-32); land nav jumps on the eyebrow
+   just under the header rather than on the padding. */
+main > section[id]:not(:first-child) {
+  scroll-margin-top: -5rem;
+}
+
+@media (min-width: 40rem) {
+  main > section[id]:not(:first-child) {
+    scroll-margin-top: -7rem;
+  }
+}
+
 /* Sections receive programmatic focus on nav clicks (see useSectionNavigation); don't outline them. */
 section[tabindex='-1']:focus {
   outline: none;
@@ -97,8 +109,9 @@ section[tabindex='-1']:focus {
   opacity: 0.35;
 }
 
+/* Lower than before to offset the darker light-mode --color-line. */
 :root.light .bg-grid-texture {
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 /* Smooth theme switch: expand a circle from the toggle button over the old theme. */

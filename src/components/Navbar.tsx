@@ -53,7 +53,8 @@ export function Navbar({ theme, onToggleTheme }: NavbarProps) {
             aria-label="Yasiru Lansakara, back to top"
             className="font-mono text-xl font-bold tracking-tight text-ink hover:text-violet transition-colors"
           >
-            YL<span className="text-violet">.</span>
+            {/* Negative margin closes the full-width monospace cell gap before the period. */}
+            YL<span className="-ml-[0.2em] text-violet">.</span>
           </a>
 
           <ul className="hidden items-center gap-1 lg:flex">

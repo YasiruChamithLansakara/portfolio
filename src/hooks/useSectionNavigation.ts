@@ -89,7 +89,8 @@ export function useSectionNavigation(sectionIds: string[]) {
       if (disposed || !lockedId) return
       const el = document.getElementById(lockedId)
       if (!el) return
-      if (Math.abs(el.getBoundingClientRect().top - getScrollPaddingTop()) > 2) {
+      const expectedTop = getScrollPaddingTop() + (parseFloat(getComputedStyle(el).scrollMarginTop) || 0)
+      if (Math.abs(el.getBoundingClientRect().top - expectedTop) > 2) {
         el.scrollIntoView({ behavior: 'instant', block: 'start' })
       }
     }
