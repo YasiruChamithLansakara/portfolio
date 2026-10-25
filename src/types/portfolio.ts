@@ -47,6 +47,8 @@ export interface ExperienceEntry {
   organization: string
   location?: string
   period: string
+  /** Organization logo, relative to public/ (e.g. images/experience/slt-logo.svg) */
+  logo?: { src: string; alt: string }
   bullets: string[]
 }
 
@@ -55,7 +57,12 @@ export interface EducationEntry {
   institution: string
   period: string
   status: 'Completed' | 'In Progress'
+  /** Highlighted result, e.g. a GPA — shown as a tag beside the qualification */
   detail?: string
+  /** School-level qualification (O/L, A/L) — shown more compactly so the degrees lead */
+  school?: boolean
+  /** Modules (or school subjects), most relevant first — shown in a dropdown under the row */
+  modules?: string[]
 }
 
 export interface CertificationEntry {
