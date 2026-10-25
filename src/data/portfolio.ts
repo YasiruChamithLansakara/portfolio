@@ -1,4 +1,5 @@
 import type {
+  AboutFact,
   CertificationEntry,
   EducationEntry,
   ExperienceEntry,
@@ -39,12 +40,24 @@ export const navLinks: NavLink[] = [
   { label: 'Contact', href: '#contact' },
 ]
 
-export const aboutParagraphs: string[] = [
-  "I'm a Computer Science undergraduate specializing in Artificial Intelligence, currently in the final year of my BSc (Hons) in Computer Science with Artificial Intelligence at Coventry University, UK. I previously completed a Higher National Diploma in Computer Science with Artificial Intelligence and a Diploma at the National Institute of Business Management (NIBM), achieving a GPA of 3.98/4.0 in my Diploma.",
-  "My interests lie in Machine Learning, Computer Vision, and practical software development. Through academic and independent projects, I've worked on machine learning models for health-related predictions, satellite imagery analysis for urbanization and deforestation in Sri Lanka, and full-stack web applications. I enjoy turning raw data and ideas into useful, working solutions.",
-  'During my AI/ML internship at SLT Digital Platforms, I gained hands-on experience with speech-to-text development, voice-based mood classification research, and AI chatbot development. I also developed my skills in audio processing, model experimentation, testing, and technical documentation.',
-  "I'm comfortable working across the AI development process, from data preprocessing and model development to building application interfaces. I'm always eager to learn new technologies, solve meaningful problems, and build reliable software that brings practical value to people.",
-]
+// Kept short on purpose — degree, internship and project details live in their own sections.
+export const about: { lead: string; paragraphs: string[]; facts: AboutFact[] } = {
+  lead: 'I build AI-driven software — taking raw data and ideas all the way to applications people can actually use.',
+  paragraphs: [
+    "My work centers on machine learning, computer vision and speech AI. I've built models for health-related predictions, analyzed satellite imagery to track urbanization and deforestation across Sri Lanka, and shipped full-stack web apps along the way.",
+    "I'm comfortable across the whole pipeline — data preprocessing, model development and experimentation, testing, and the interface on top. I'm always keen to pick up new tools and to work on problems that bring practical value to people.",
+  ],
+  facts: [
+    { label: 'Based in', value: personal.location },
+    {
+      label: 'Studying',
+      value: 'BSc (Hons) Computer Science with AI',
+      detail: 'Coventry University, UK',
+    },
+    { label: 'Recently', value: 'AI/ML Intern', detail: 'SLT Digital Platforms · 6 months' },
+    { label: 'Focus', value: 'Machine Learning · Computer Vision · Speech AI & NLP' },
+  ],
+}
 
 export const skillCategories: SkillCategory[] = [
   {

@@ -9,6 +9,13 @@ export interface SocialLink {
   icon: 'github' | 'linkedin' | 'email'
 }
 
+export interface AboutFact {
+  label: string
+  value: string
+  /** Optional secondary line shown under the value */
+  detail?: string
+}
+
 export interface SkillCategory {
   title: string
   skills: string[]
