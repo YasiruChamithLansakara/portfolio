@@ -2,10 +2,13 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Menu, X } from 'lucide-react'
 import { navLinks } from '../data/portfolio'
-import { useActiveSection } from '../hooks/useActiveSection'
+import { useSectionNavigation } from '../hooks/useSectionNavigation'
 import type { Theme, ThemeTransitionOrigin } from '../hooks/useTheme'
 import { ThemeToggle } from './ThemeToggle'
 import { Container } from './Container'
+
+// Module-level so the array is stable across renders (the hook re-subscribes when it changes).
+const sectionIds = navLinks.map((link) => link.href.replace('#', ''))
 
 interface NavbarProps {
   theme: Theme
@@ -15,7 +18,7 @@ interface NavbarProps {
 export function Navbar({ theme, onToggleTheme }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
-  const activeId = useActiveSection(navLinks.map((link) => link.href.replace('#', '')))
+  const activeId = useSectionNavigation(sectionIds)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -47,9 +50,10 @@ export function Navbar({ theme, onToggleTheme }: NavbarProps) {
         <nav className="flex h-16 items-center justify-between" aria-label="Primary">
           <a
             href="#home"
-            className="font-mono text-base font-semibold tracking-tight text-ink hover:text-violet transition-colors"
+            aria-label="Yasiru Lansakara, back to top"
+            className="font-mono text-xl font-bold tracking-tight text-ink hover:text-violet transition-colors"
           >
-            Yasiru<span className="text-violet">.</span>Lansakara
+            YL<span className="text-violet">.</span>
           </a>
 
           <ul className="hidden items-center gap-1 lg:flex">
@@ -59,6 +63,7 @@ export function Navbar({ theme, onToggleTheme }: NavbarProps) {
                 <li key={link.href}>
                   <a
                     href={link.href}
+                    aria-current={isActive ? 'location' : undefined}
                     className={`relative rounded-full px-3.5 py-2 text-sm font-medium transition-colors ${
                       isActive ? 'text-ink' : 'text-ink-muted hover:text-ink'
                     }`}
@@ -104,16 +109,22 @@ export function Navbar({ theme, onToggleTheme }: NavbarProps) {
             className="overflow-hidden border-b border-line bg-canvas lg:hidden"
           >
             <Container className="flex flex-col gap-1 py-4">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="rounded-lg px-3 py-2.5 text-base font-medium text-ink-muted hover:bg-panel hover:text-ink"
-                >
-                  {link.label}
-                </a>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = activeId === link.href.replace('#', '')
+                return (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    aria-current={isActive ? 'location' : undefined}
+                    onClick={() => setMenuOpen(false)}
+                    className={`rounded-lg px-3 py-2.5 text-base font-medium hover:bg-panel hover:text-ink ${
+                      isActive ? 'bg-panel text-ink' : 'text-ink-muted'
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                )
+              })}
               <div className="mt-2 flex items-center justify-between border-t border-line px-3 pt-4">
                 <span className="text-sm text-ink-muted">Theme</span>
                 <ThemeToggle theme={theme} onToggle={onToggleTheme} />

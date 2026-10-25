@@ -83,6 +83,11 @@ body {
   border-radius: 2px;
 }
 
+/* Sections receive programmatic focus on nav clicks (see useSectionNavigation); don't outline them. */
+section[tabindex='-1']:focus {
+  outline: none;
+}
+
 /* Subtle fixed grid texture behind all content */
 .bg-grid-texture {
   background-image:
