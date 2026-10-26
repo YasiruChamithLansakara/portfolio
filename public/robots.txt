@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yasiruchamithlansakara.github.io/portfolio_v2/sitemap.xml
+Sitemap: https://yasiruchamithlansakara.github.io/portfolio/sitemap.xml

@@ -1,6 +1,6 @@
 <div align="center">
 
-<a href="https://yasiruchamithlansakara.github.io/portfolio_v2/">
+<a href="https://yasiruchamithlansakara.github.io/portfolio/">
   <picture>
     <source media="(prefers-color-scheme: light)" srcset="docs/screenshots/hero-light.jpg" />
     <img src="docs/screenshots/hero-dark.jpg" alt="Yasiru Lansakara portfolio: hero section" width="100%" />
@@ -11,8 +11,8 @@
 
 **AI & software developer portfolio: machine learning, computer vision and full-stack projects, in one fast single-page site.**
 
-[![Live site](https://img.shields.io/badge/Live_site-yasiruchamithlansakara.github.io-8b7bf7?style=flat&logo=githubpages&logoColor=white)](https://yasiruchamithlansakara.github.io/portfolio_v2/)
-[![Deploy](https://github.com/YasiruChamithLansakara/portfolio_v2/actions/workflows/deploy.yml/badge.svg)](https://github.com/YasiruChamithLansakara/portfolio_v2/actions/workflows/deploy.yml)
+[![Live site](https://img.shields.io/badge/Live_site-yasiruchamithlansakara.github.io-8b7bf7?style=flat&logo=githubpages&logoColor=white)](https://yasiruchamithlansakara.github.io/portfolio/)
+[![Deploy](https://github.com/YasiruChamithLansakara/portfolio/actions/workflows/deploy.yml/badge.svg)](https://github.com/YasiruChamithLansakara/portfolio/actions/workflows/deploy.yml)
 
 [![React](https://img.shields.io/badge/React-19-0d1220?style=flat&logo=react&logoColor=61DAFB)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-6-0d1220?style=flat&logo=typescript&logoColor=3178C6)](https://www.typescriptlang.org)
@@ -20,7 +20,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-0d1220?style=flat&logo=tailwindcss&logoColor=4fd8e8)](https://tailwindcss.com)
 [![Motion](https://img.shields.io/badge/Motion-14-0d1220?style=flat&logo=framer&logoColor=white)](https://motion.dev)
 
-[**Live demo**](https://yasiruchamithlansakara.github.io/portfolio_v2/) ·
+[**Live demo**](https://yasiruchamithlansakara.github.io/portfolio/) ·
 [Features](#features) ·
 [Screenshots](#screenshots) ·
 [Tech stack](#tech-stack) ·
@@ -91,13 +91,13 @@
 **Prerequisites:** Node.js 22 (or 20.19+) and npm.
 
 ```bash
-git clone https://github.com/YasiruChamithLansakara/portfolio_v2.git
-cd portfolio_v2
+git clone https://github.com/YasiruChamithLansakara/portfolio.git
+cd portfolio
 npm install
 npm run dev
 ```
 
-The dev server prints a local URL. Because of the GitHub Pages base path, the site is served under `/portfolio_v2/`.
+The dev server prints a local URL. Because of the GitHub Pages base path, the site is served under `/portfolio/`.
 
 ### Contact form (optional)
 
