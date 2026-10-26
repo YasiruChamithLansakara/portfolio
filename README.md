@@ -2,7 +2,7 @@
 
 A React + TypeScript + Vite rebuild of the personal portfolio, replacing the original static HTML/CSS/JS site. Content lives entirely in [`src/data/portfolio.ts`](src/data/portfolio.ts) so it can be updated without touching layout components.
 
-> **This is V2.** The original site ([live](https://yasiruchamithlansakara.github.io/Portfolio/), [repo](https://github.com/YasiruChamithLansakara/Portfolio)) is untouched and still live. See [`TODO.md`](TODO.md) for content that still needs your input.
+> **This is V2.** It replaces the original site ([repo](https://github.com/YasiruChamithLansakara/Portfolio)), which is no longer published. See [`TODO.md`](TODO.md) for content that still needs your input.
 
 ## Stack
 
@@ -44,7 +44,7 @@ One-time setup in the repository's settings:
 1. **Pages** → Build and deployment → Source → **GitHub Actions**.
 2. **Secrets and variables → Actions** → New repository secret named `VITE_FORMSPREE_ENDPOINT`, with the same value as in `.env.local`. Without it the live contact form falls back to `mailto:`.
 
-After that, `git push` deploys. Once the live site checks out, point external links (LinkedIn, CV, GitHub profile) at the new URL; V1 stays live at its own URL until you retire it.
+After that, `git push` deploys.
 
 ## Project structure
 
