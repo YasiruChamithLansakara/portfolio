@@ -331,6 +331,7 @@ export const certifications: CertificationEntry[] = [
     date: '8 October 2026',
     credentialUrl: 'https://www.udacity.com/certificate/e/cccf2ab2-900d-11f1-8f2f-bf01a55aa7d7',
     imagePath: 'images/certifications/future-aws-ai-programmer.webp',
+    imageSize: { width: 1000, height: 773 },
   },
   {
     name: 'AWS AI Practitioner Challenge',
@@ -338,12 +339,14 @@ export const certifications: CertificationEntry[] = [
     date: '7 May 2026',
     credentialUrl: 'https://www.udacity.com/certificate/e/739c9b82-2d6b-11f1-afe9-739b7e14f48d',
     imagePath: 'images/certifications/aws-ai-practitioner-challenge.webp',
+    imageSize: { width: 1000, height: 773 },
   },
   {
     name: 'Cloud 102: AI & Machine Learning Using AWS Services',
     issuer: 'AWS Cloud Club, NIBM',
     date: '28 March 2026',
     imagePath: 'images/certifications/cloud-102-aws.webp',
+    imageSize: { width: 1000, height: 707 },
   },
   {
     name: 'Critical Thinking in the AI Era',
@@ -351,6 +354,7 @@ export const certifications: CertificationEntry[] = [
     date: '22 March 2026',
     credentialId: '4fe96200-4eca-4db5-ad47-68a4275599e0',
     imagePath: 'images/certifications/critical-thinking-ai-era.webp',
+    imageSize: { width: 1000, height: 707 },
   },
   {
     name: 'Python for Beginners',
@@ -359,6 +363,7 @@ export const certifications: CertificationEntry[] = [
     credentialUrl: 'https://open.uom.lk/verify',
     credentialId: 'uQDVI9hiSx',
     imagePath: 'images/certifications/python-for-beginners.webp',
+    imageSize: { width: 1000, height: 707 },
   },
   {
     name: 'Web Design for Beginners',
@@ -366,10 +371,12 @@ export const certifications: CertificationEntry[] = [
     credentialUrl: 'https://open.uom.lk/verify',
     credentialId: 'iWXdR0tOYi',
     imagePath: 'images/certifications/web-design-for-beginners.webp',
+    imageSize: { width: 1000, height: 707 },
   },
   {
     name: 'Mastering Azure: Elevate Your Cloud Expertise',
     issuer: 'Microsoft Learn Student Ambassadors',
     imagePath: 'images/certifications/mastering-azure.webp',
+    imageSize: { width: 1000, height: 773 },
   },
 ]

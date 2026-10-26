@@ -63,6 +63,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5.5rem;
+  /* Reserve the scrollbar's width, so locking scroll for a modal doesn't shift the page sideways. */
+  scrollbar-gutter: stable;
 }
 
 body {

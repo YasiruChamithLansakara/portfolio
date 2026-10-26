@@ -74,4 +74,6 @@ export interface CertificationEntry {
   credentialId?: string
   /** Path to a preview image of the certificate itself, shown in the "View Certificate" modal. */
   imagePath?: string
+  /** Pixel size of imagePath, so the modal can reserve its space before the image loads. */
+  imageSize?: { width: number; height: number }
 }
