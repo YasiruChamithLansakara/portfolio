@@ -3,7 +3,9 @@ import { motion } from 'motion/react'
 import { ArrowUpRight, Check, CheckCircle2, Copy, MapPin, Send } from 'lucide-react'
 import { personal, socialLinks } from '../data/portfolio'
 import { useCopyToClipboard } from '../hooks/useCopyToClipboard'
+import { reveal } from '../lib/motion'
 import { Container } from './Container'
+import { Magnetic } from './Magnetic'
 import { SectionHeading } from './SectionHeading'
 import { GithubIcon, LinkedinIcon } from './icons/BrandIcons'
 
@@ -58,7 +60,7 @@ function EmailBlock() {
           type="button"
           onClick={() => copy(personal.email)}
           aria-label="Copy email address"
-          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-line text-ink-muted transition-colors hover:border-violet/40 hover:text-violet"
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-glass-line bg-ink/[0.04] text-ink-muted transition-[color,border-color,transform] hover:border-violet/40 hover:text-violet active:scale-90"
         >
           {copied ? <Check className="h-3.5 w-3.5 text-cyan" aria-hidden="true" /> : <Copy className="h-3.5 w-3.5" aria-hidden="true" />}
         </button>
@@ -115,10 +117,10 @@ export function Contact() {
   }
 
   const fieldClass = (hasError: boolean) =>
-    `w-full rounded-xl border bg-canvas-raised px-4 py-3 text-sm text-ink transition-colors placeholder:text-ink-faint focus:outline-none focus:ring-4 ${
+    `w-full rounded-xl border bg-canvas/40 px-4 py-3 text-sm text-ink transition-[border-color,box-shadow,background-color] duration-300 placeholder:text-ink-faint focus:bg-canvas/60 focus:outline-none focus:ring-4 ${
       hasError
         ? 'border-danger focus:ring-danger/15'
-        : 'border-line hover:border-ink-faint/60 focus:border-violet focus:ring-violet/15'
+        : 'border-glass-line hover:border-ink-faint/60 focus:border-violet focus:ring-violet/15'
     }`
 
   return (
@@ -132,16 +134,18 @@ export function Contact() {
 
         {/* One panel, two panes: direct details on a quieter side, the form on the other, so they read as one piece. */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.45, ease: 'easeOut' }}
-          className="grid overflow-hidden rounded-2xl border border-line bg-panel lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"
+          {...reveal()}
+          // The travelling border beam marks this as the page's destination.
+          className="glass border-beam relative grid overflow-hidden rounded-3xl lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]"
         >
-          <aside className="relative flex flex-col gap-8 border-b border-line bg-panel-hover/60 p-6 sm:p-8 lg:border-r lg:border-b-0 lg:p-10 dark:bg-canvas-raised">
+          <aside className="relative flex flex-col gap-8 overflow-hidden border-b border-glass-line bg-ink/[0.025] p-6 sm:p-8 lg:border-r lg:border-b-0 lg:p-10">
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet/10 via-transparent to-transparent"
+              className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet/15 via-transparent to-transparent"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -bottom-28 -left-20 h-64 w-64 rounded-full bg-cyan/15 blur-3xl"
             />
 
             <div className="relative">
@@ -155,7 +159,7 @@ export function Contact() {
               <EmailBlock />
             </div>
 
-            <div className="relative border-t border-line pt-6 lg:mt-auto">
+            <div className="relative border-t border-glass-line pt-6 lg:mt-auto">
               <p className="font-mono text-[11px] tracking-wide text-ink-faint uppercase">Elsewhere</p>
               <ul className="mt-3 space-y-1">
                 {socialLinks
@@ -168,7 +172,7 @@ export function Contact() {
                           href={link.url}
                           target="_blank"
                           rel="noreferrer"
-                          className="group -mx-3 flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-panel"
+                          className="group -mx-3 flex items-center gap-3 rounded-xl px-3 py-2.5 transition-colors hover:bg-ink/[0.05]"
                         >
                           <Icon className="h-4.5 w-4.5 shrink-0 text-ink-muted transition-colors group-hover:text-violet" aria-hidden="true" />
                           <span className="text-sm font-medium text-ink">{link.label}</span>
@@ -306,14 +310,19 @@ export function Contact() {
                 )}
               </div>
 
-              <button
-                type="submit"
-                disabled={status === 'submitting'}
-                className="inline-flex shrink-0 items-center justify-center gap-2 self-start rounded-full bg-violet px-6 py-3 text-sm font-semibold text-white transition-[transform,background-color] hover:-translate-y-0.5 hover:bg-violet-soft disabled:cursor-not-allowed disabled:opacity-60 sm:self-auto"
-              >
-                <Send className="h-4 w-4" aria-hidden="true" />
-                {status === 'submitting' ? 'Sending…' : 'Send message'}
-              </button>
+              <Magnetic className="shrink-0 self-start sm:self-auto">
+                <button
+                  type="submit"
+                  disabled={status === 'submitting'}
+                  className="btn-shine group inline-flex items-center justify-center gap-2 rounded-full bg-violet px-6 py-3.5 text-sm font-semibold text-white shadow-[0_10px_30px_-8px] shadow-violet/60 transition-colors hover:bg-violet-soft disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  <Send
+                    className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    aria-hidden="true"
+                  />
+                  {status === 'submitting' ? 'Sending…' : 'Send message'}
+                </button>
+              </Magnetic>
             </div>
           </form>
         </motion.div>

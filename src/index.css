@@ -5,12 +5,13 @@
 
 @theme {
   --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
 
   /* Semantic color tokens — values are set per-theme below, outside @theme,
      so the generated utilities (bg-canvas, text-ink, etc.) stay reactive
      to the .light class swap at runtime. */
-  --color-canvas: #0a0e1a;
+  --color-canvas: #070a14;
   --color-canvas-raised: #0d1220;
   --color-panel: #11172a;
   --color-panel-hover: #161d33;
@@ -22,6 +23,12 @@
   --color-violet-soft: #a594ff;
   --color-cyan: #4fd8e8;
   --color-danger: #f17272;
+  --color-glass: rgb(17 23 42 / 0.5);
+  --color-glass-line: rgb(255 255 255 / 0.08);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Gentler than expo (which front-loads ~90% of the motion): for hover zooms that should glide. */
+  --ease-smooth: cubic-bezier(0.33, 1, 0.68, 1);
 
   --breakpoint-xs: 22.5rem;
 }
@@ -32,7 +39,7 @@
 
 :root,
 :root.dark {
-  --color-canvas: #0a0e1a;
+  --color-canvas: #070a14;
   --color-canvas-raised: #0d1220;
   --color-panel: #11172a;
   --color-panel-hover: #161d33;
@@ -43,11 +50,17 @@
   --color-violet: #8b7bf7;
   --color-violet-soft: #a594ff;
   --color-cyan: #4fd8e8;
+  --color-glass: rgb(17 23 42 / 0.5);
+  --color-glass-line: rgb(255 255 255 / 0.08);
+  --glass-highlight: rgb(255 255 255 / 0.06);
+  --glass-shadow: rgb(0 0 0 / 0.45);
+  --aurora-strength: 26%;
+  --noise-opacity: 0.05;
 }
 
 :root.light {
   color-scheme: light;
-  --color-canvas: #f7f8fb;
+  --color-canvas: #f5f6fb;
   --color-canvas-raised: #ffffff;
   --color-panel: #ffffff;
   --color-panel-hover: #f1f2f8;
@@ -58,6 +71,12 @@
   --color-violet: #6d4eef;
   --color-violet-soft: #5a3de0;
   --color-cyan: #0f93a8;
+  --color-glass: rgb(255 255 255 / 0.6);
+  --color-glass-line: rgb(22 26 40 / 0.09);
+  --glass-highlight: rgb(255 255 255 / 0.9);
+  --glass-shadow: rgb(30 36 70 / 0.12);
+  --aurora-strength: 16%;
+  --noise-opacity: 0.035;
 }
 
 html {
@@ -71,6 +90,8 @@ body {
   background-color: var(--color-canvas);
   color: var(--color-ink);
   font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -85,6 +106,129 @@ body {
     outline: 2px solid var(--color-violet-soft);
     outline-offset: 3px;
     border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Surfaces live in the components layer, so any utility (border color, shadow) can override them. */
+@layer components {
+  /* Frosted panel: translucent fill, hairline border, a top highlight and a soft drop shadow. */
+  .glass {
+    background-color: var(--color-glass);
+    border: 1px solid var(--color-glass-line);
+    box-shadow:
+      inset 0 1px 0 0 var(--glass-highlight),
+      0 20px 50px -24px var(--glass-shadow);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    backdrop-filter: blur(18px) saturate(160%);
+  }
+
+  /* Cursor-following glow (fill + border). Position comes from --mx/--my, set by trackSpotlight(). */
+  .spotlight {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .spotlight::before,
+  .spotlight::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .spotlight::before {
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(
+      28rem circle at var(--mx, 50%) var(--my, 50%),
+      color-mix(in oklab, var(--color-violet) 13%, transparent),
+      transparent 60%
+    );
+  }
+
+  /* Masked to a 1px ring, so only the border lights up under the cursor. Drawn just inside the
+     edge (inset: 0) so overflow-hidden panels don't clip it away. */
+  .spotlight::after {
+    inset: 0;
+    padding: 1px;
+    background: radial-gradient(
+      18rem circle at var(--mx, 50%) var(--my, 50%),
+      color-mix(in oklab, var(--color-violet-soft) 75%, transparent),
+      transparent 70%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  .spotlight:hover::before,
+  .spotlight:hover::after,
+  .spotlight:focus-within::after {
+    opacity: 1;
+  }
+
+  /* A light sweep across a button on hover. */
+  .btn-shine {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .btn-shine::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(110deg, transparent 30%, rgb(255 255 255 / 0.32) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.8s var(--ease-out-expo);
+  }
+
+  .btn-shine:hover::after {
+    transform: translateX(120%);
+  }
+
+  /* A short arc of light that travels around the element's border. Pair with overflow-hidden parents
+     carefully: it draws just inside the edge (inset: 0), so clipping never cuts it off. */
+  .border-beam::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    padding: 1px;
+    border-radius: inherit;
+    pointer-events: none;
+    background: conic-gradient(
+      from var(--beam-angle),
+      transparent 0 68%,
+      var(--color-violet-soft) 78%,
+      var(--color-cyan) 86%,
+      transparent 94%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: beam-spin 7s linear infinite;
+  }
+
+  .text-gradient {
+    background-image: linear-gradient(100deg, var(--color-ink) 0%, var(--color-violet-soft) 55%, var(--color-cyan) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
 }
 
@@ -105,7 +249,7 @@ section[tabindex='-1']:focus {
   outline: none;
 }
 
-/* Subtle fixed grid texture behind all content */
+/* Subtle grid texture */
 .bg-grid-texture {
   background-image:
     linear-gradient(to right, var(--color-line) 1px, transparent 1px),
@@ -117,6 +261,140 @@ section[tabindex='-1']:focus {
 /* Lower than before to offset the darker light-mode --color-line. */
 :root.light .bg-grid-texture {
   opacity: 0.4;
+}
+
+/* A violet copy of the grid, visible only in a circle around the cursor (--mx/--my from trackSpotlight).
+   Parked far off-screen until the pointer first moves. */
+.bg-grid-texture.grid-reveal {
+  --color-line: var(--color-violet);
+  opacity: 0.55;
+  -webkit-mask-image: radial-gradient(15rem circle at var(--mx, -100rem) var(--my, -100rem), black, transparent);
+  mask-image: radial-gradient(15rem circle at var(--mx, -100rem) var(--my, -100rem), black, transparent);
+}
+
+/* Page-wide backdrop: slow-drifting colour fields the glass panels blur over.
+   Radial gradients (not filter: blur) keep it cheap; only transforms animate. */
+.aurora {
+  position: absolute;
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle at center,
+    color-mix(in oklab, var(--aurora-color) var(--aurora-strength), transparent),
+    transparent 68%
+  );
+  will-change: transform;
+}
+
+.aurora-violet {
+  --aurora-color: var(--color-violet);
+  top: -22vmax;
+  right: -18vmax;
+  width: 70vmax;
+  height: 70vmax;
+  animation: aurora-drift-a 34s ease-in-out infinite alternate;
+}
+
+.aurora-cyan {
+  --aurora-color: var(--color-cyan);
+  bottom: -30vmax;
+  left: -22vmax;
+  width: 64vmax;
+  height: 64vmax;
+  animation: aurora-drift-b 40s ease-in-out infinite alternate;
+}
+
+.aurora-soft {
+  --aurora-color: var(--color-violet-soft);
+  top: 30%;
+  left: 25%;
+  width: 46vmax;
+  height: 46vmax;
+  opacity: 0.6;
+  animation: aurora-drift-c 46s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-drift-a {
+  to {
+    transform: translate3d(-14vmax, 18vmax, 0) scale(1.15);
+  }
+}
+
+@keyframes aurora-drift-b {
+  to {
+    transform: translate3d(18vmax, -12vmax, 0) scale(0.9);
+  }
+}
+
+@keyframes aurora-drift-c {
+  to {
+    transform: translate3d(-10vmax, -14vmax, 0) scale(1.2);
+  }
+}
+
+/* Film grain, so the large gradients don't band. */
+.bg-noise {
+  opacity: var(--noise-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Registered so the conic gradient's start angle can animate smoothly. */
+@property --beam-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes beam-spin {
+  to {
+    --beam-angle: 360deg;
+  }
+}
+
+/* Infinite ticker: the track holds two identical copies, so sliding by half loops seamlessly. */
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 60s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes float-y {
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: float-y 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-y 7s ease-in-out 1.2s infinite;
+}
+
+@keyframes scroll-dot {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+}
+
+.animate-scroll-dot {
+  animation: scroll-dot 1.8s ease-in-out infinite;
 }
 
 /* Smooth theme switch: expand a circle from the toggle button over the old theme. */

@@ -19,10 +19,17 @@ export function ThemeToggle({ theme, onToggle, className = '' }: ThemeToggleProp
       }}
       aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
       aria-pressed={isDark}
-      className={`relative flex h-9 w-9 items-center justify-center rounded-full border border-line bg-panel text-ink-muted transition-colors hover:text-ink ${className}`}
+      className={`relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-glass-line bg-ink/5 text-ink-muted transition-colors hover:bg-ink/10 hover:text-ink ${className}`}
     >
-      <Sun className="h-4 w-4 scale-100 dark:scale-0 transition-transform" aria-hidden="true" />
-      <Moon className="absolute h-4 w-4 scale-0 dark:scale-100 transition-transform" aria-hidden="true" />
+      {/* The icons swap with a quarter turn, like a dial. */}
+      <Sun
+        className="h-4 w-4 rotate-0 scale-100 transition-transform duration-500 ease-[var(--ease-out-expo)] dark:-rotate-90 dark:scale-0"
+        aria-hidden="true"
+      />
+      <Moon
+        className="absolute h-4 w-4 rotate-90 scale-0 transition-transform duration-500 ease-[var(--ease-out-expo)] dark:rotate-0 dark:scale-100"
+        aria-hidden="true"
+      />
     </button>
   )
 }

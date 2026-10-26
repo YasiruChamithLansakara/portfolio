@@ -1,5 +1,7 @@
 import { motion } from 'motion/react'
 import { experience } from '../data/portfolio'
+import { easeOutExpo, reveal } from '../lib/motion'
+import { trackSpotlight } from '../lib/pointer'
 import { Container } from './Container'
 import { SectionHeading } from './SectionHeading'
 
@@ -9,26 +11,30 @@ export function Experience() {
       <Container>
         <SectionHeading eyebrow="Experience" title="Where I've worked" />
 
-        {/* Same row-in-a-panel layout as Skills: period on the left, the role on the right. */}
-        <ol className="divide-y divide-line rounded-2xl border border-line bg-panel px-6 sm:px-8">
+        {/* One glass card per role: period and logo on the left, the role on the right. */}
+        <ol className="space-y-4">
           {experience.map((entry, index) => {
             // Wrap only between the start and end dates, never inside one.
             const [start, end] = entry.period.split(' – ')
             return (
               <motion.li
                 key={`${entry.organization}-${index}`}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.4, ease: 'easeOut' }}
-                className="grid gap-3 py-6 sm:py-8 md:grid-cols-[12rem_1fr] md:gap-6"
+                {...reveal()}
+                onPointerMove={trackSpotlight}
+                className="glass spotlight grid gap-3 overflow-hidden rounded-3xl p-6 sm:p-8 md:grid-cols-[12rem_1fr] md:gap-6"
               >
+                {/* An accent bar down the leading edge marks the entry. */}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-y-8 left-0 w-0.5 rounded-full bg-gradient-to-b from-cyan via-violet to-transparent"
+                />
+
                 {/* Logo beside the dates on phones, stacked above them from md up. */}
                 <div className="flex items-center gap-4 md:flex-col md:items-start md:gap-4">
                   {entry.logo && (
                     // Always-white tile: brand logos are drawn for light backgrounds, so this keeps
                     // their colors legible in dark mode too.
-                    <div className="shrink-0 rounded-xl border border-line bg-white px-3 py-2.5">
+                    <div className="shrink-0 rounded-xl border border-line bg-white px-3 py-2.5 shadow-lg shadow-black/10">
                       <img
                         src={`${import.meta.env.BASE_URL}${entry.logo.src}`}
                         alt={entry.logo.alt}
@@ -50,14 +56,24 @@ export function Experience() {
                 </div>
 
                 <div className="max-w-2xl">
-                  <h3 className="text-lg font-semibold text-ink">{entry.role}</h3>
-                  <p className="mt-0.5 text-sm font-medium text-violet">{entry.organization}</p>
-                  <ul className="mt-4 space-y-2.5">
-                    {entry.bullets.map((bullet) => (
-                      <li key={bullet} className="flex gap-3 text-sm leading-relaxed text-ink-muted">
-                        <span className="mt-[0.6rem] h-px w-2.5 shrink-0 bg-ink-faint" aria-hidden="true" />
+                  <h3 className="text-xl font-semibold text-ink">{entry.role}</h3>
+                  <p className="mt-1 text-sm font-medium text-violet">{entry.organization}</p>
+                  <ul className="mt-5 space-y-3">
+                    {entry.bullets.map((bullet, i) => (
+                      <motion.li
+                        key={bullet}
+                        initial={{ opacity: 0, x: -10 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: '-40px' }}
+                        transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.15 + i * 0.07 }}
+                        className="flex gap-3 text-sm leading-relaxed text-ink-muted sm:text-[0.9375rem]"
+                      >
+                        <span
+                          className="mt-[0.55rem] h-1.5 w-1.5 shrink-0 rounded-full bg-gradient-to-br from-cyan to-violet"
+                          aria-hidden="true"
+                        />
                         {bullet}
-                      </li>
+                      </motion.li>
                     ))}
                   </ul>
                 </div>

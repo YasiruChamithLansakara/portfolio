@@ -7,6 +7,7 @@ import type {
   Project,
   SkillCategory,
   SocialLink,
+  StatEntry,
 } from '../types/portfolio'
 
 export const personal = {
@@ -18,6 +19,8 @@ export const personal = {
   roles: ['AI & Machine Learning', 'Software Development', 'Computer Vision', 'NLP & Speech AI', 'Python'],
   email: 'yasiruchamithlansakara@gmail.com',
   location: 'Sri Lanka',
+  // Drives the live local-time readout in the footer.
+  timeZone: 'Asia/Colombo',
   // No CV is currently published — the old one was outdated. Set this once an updated CV PDF
   // is added at public/cv/Yasiru_Lansakara_CV.pdf, and the Download CV button will reappear.
   cvPath: undefined as string | undefined,
@@ -379,4 +382,13 @@ export const certifications: CertificationEntry[] = [
     imagePath: 'images/certifications/mastering-azure.webp',
     imageSize: { width: 1000, height: 773 },
   },
+]
+
+// Headline numbers for the About section. Counts are derived; the GPA and internship length
+// mirror the Diploma entry in `education` and the SLT entry in `experience` — keep them in sync.
+export const stats: StatEntry[] = [
+  { value: projects.length, label: 'Projects built' },
+  { value: certifications.length, label: 'Certifications' },
+  { value: 3.98, decimals: 2, label: 'Diploma GPA' },
+  { value: 6, suffix: ' mo', label: 'AI/ML internship' },
 ]

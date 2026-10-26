@@ -103,7 +103,7 @@ export function CertificateModal({ certificate, onClose }: CertificateModalProps
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 backdrop-blur-md"
           onClick={onClose}
         >
           <motion.div
@@ -111,11 +111,11 @@ export function CertificateModal({ certificate, onClose }: CertificateModalProps
             role="dialog"
             aria-modal="true"
             aria-labelledby="certificate-modal-title"
-            initial={{ opacity: 0, scale: 0.96, y: 10 }}
+            initial={{ opacity: 0, scale: 0.94, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 10 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-line bg-panel"
+            exit={{ opacity: 0, scale: 0.96, y: 10, transition: { duration: 0.2 } }}
+            transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+            className="relative flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl border border-glass-line bg-panel/90 shadow-2xl shadow-black/40 backdrop-blur-xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-start justify-between gap-4 border-b border-line p-5">
@@ -139,7 +139,7 @@ export function CertificateModal({ certificate, onClose }: CertificateModalProps
               </button>
             </div>
 
-            <div className="overflow-y-auto bg-canvas-raised p-4">
+            <div className="overflow-y-auto bg-canvas-raised/60 p-4">
               {certificate.imagePath && (
                 <img
                   src={`${import.meta.env.BASE_URL}${certificate.imagePath}`}

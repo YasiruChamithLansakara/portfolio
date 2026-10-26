@@ -16,6 +16,15 @@ export interface AboutFact {
   detail?: string
 }
 
+export interface StatEntry {
+  value: number
+  label: string
+  /** Digits after the decimal point, e.g. 2 for a GPA */
+  decimals?: number
+  /** Appended after the number, e.g. ' mo' */
+  suffix?: string
+}
+
 export interface SkillCategory {
   title: string
   /** Tools, libraries and languages — shown as chips */
