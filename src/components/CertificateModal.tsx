@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { Check, Copy, ExternalLink, X } from 'lucide-react'
+import { useCopyToClipboard } from '../hooks/useCopyToClipboard'
 import type { CertificationEntry } from '../types/portfolio'
 
 interface CertificateModalProps {
@@ -11,23 +12,7 @@ interface CertificateModalProps {
 // Keyed by certificate so the "copied" state never carries over to the next one opened.
 function CredentialFooter({ certificate }: { certificate: CertificationEntry }) {
   const { credentialId, credentialUrl } = certificate
-  const [copied, setCopied] = useState(false)
-
-  useEffect(() => {
-    if (!copied) return
-    const timer = window.setTimeout(() => setCopied(false), 2000)
-    return () => window.clearTimeout(timer)
-  }, [copied])
-
-  const copyId = async () => {
-    if (!credentialId) return
-    try {
-      await navigator.clipboard.writeText(credentialId)
-      setCopied(true)
-    } catch {
-      // Clipboard access can be refused; the ID is still selectable text.
-    }
-  }
+  const { copied, copy } = useCopyToClipboard()
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-line p-4">
@@ -37,7 +22,7 @@ function CredentialFooter({ certificate }: { certificate: CertificationEntry }) 
           <code className="font-mono text-xs break-all text-ink select-all">{credentialId}</code>
           <button
             type="button"
-            onClick={copyId}
+            onClick={() => copy(credentialId)}
             aria-label="Copy credential ID"
             className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-ink-muted transition-colors hover:text-violet"
           >

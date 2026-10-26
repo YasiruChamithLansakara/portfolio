@@ -79,10 +79,13 @@ body {
   color: #fff;
 }
 
-:focus-visible {
-  outline: 2px solid var(--color-violet-soft);
-  outline-offset: 3px;
-  border-radius: 2px;
+/* In the base layer so components can swap it for their own focus style (e.g. form fields' ring). */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-violet-soft);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
 }
 
 /* Sections have tall top padding (py-24 / sm:py-32); land nav jumps on the eyebrow
