@@ -1,8 +1,9 @@
 name: Deploy to GitHub Pages
 
-# Manual trigger only — review the built site locally before enabling automatic
-# deploys on push. Add a `push: { branches: [main] }` trigger once you're ready.
+# Deploys every push to main; can also be re-run by hand from the Actions tab.
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -21,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
       - run: npm ci
       - run: npm run build

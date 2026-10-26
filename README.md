@@ -2,7 +2,7 @@
 
 A React + TypeScript + Vite rebuild of the personal portfolio, replacing the original static HTML/CSS/JS site. Content lives entirely in [`src/data/portfolio.ts`](src/data/portfolio.ts) so it can be updated without touching layout components.
 
-> **This is V2.** The original site ([live](https://yasiruchamithlansakara.github.io/Portfolio/), [repo](https://github.com/YasiruChamithLansakara/Portfolio)) is untouched and still live. See [`TODO.md`](TODO.md) for everything that still needs your input before launch.
+> **This is V2.** The original site ([live](https://yasiruchamithlansakara.github.io/Portfolio/), [repo](https://github.com/YasiruChamithLansakara/Portfolio)) is untouched and still live. See [`TODO.md`](TODO.md) for content that still needs your input.
 
 ## Stack
 
@@ -33,24 +33,18 @@ npm run build        # full production build
 ## Configuration
 
 - **`VITE_FORMSPREE_ENDPOINT`** (in a `.env.local` file — see [`.env.example`](.env.example)): a [Formspree](https://formspree.io) or similar endpoint for the contact form. Without it, the form falls back to opening the visitor's email client via a `mailto:` link. `.env.local` is gitignored, so it won't be pushed — for the deployed build to have it too, add it as a repository secret (Settings → Secrets and variables → Actions → New repository secret) named `VITE_FORMSPREE_ENDPOINT`; the deploy workflow already reads it from there.
-- **`vite.config.ts` → `base`**: currently `/portfolio/`, matching `https://yasiruchamithlansakara.github.io/portfolio/`. Update this if the GitHub repository ends up with a different name (see the note in `TODO.md` about the `Portfolio`/`portfolio` name collision).
+- **`vite.config.ts` → `base`**: `/portfolio_v2/`, matching the repository name and `https://yasiruchamithlansakara.github.io/portfolio_v2/`. If the repository is renamed, update it together with the canonical/OG URLs in `index.html`, `public/sitemap.xml` and `public/robots.txt`.
 
-## Deploying to GitHub Pages (do this only when you're ready to go live)
+## Deploying to GitHub Pages
 
-1. **Create the new repository.** On GitHub, create a new repo for V2 (e.g. `portfolio-v2`, since `Portfolio` is already taken by V1 — GitHub repo names are case-insensitive, so a literal second `portfolio` repo isn't allowed). Do **not** touch or delete the existing `Portfolio` repo.
-2. **Update the base path if needed.** If the final repo name isn't `portfolio`, update `base: '/portfolio/'` in `vite.config.ts` to match (e.g. `/portfolio-v2/`), and update the canonical/OG URLs in `index.html` and `public/sitemap.xml` and `public/robots.txt` to match.
-3. **Push this project** to the new repository:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial V2 portfolio"
-   git remote add origin https://github.com/YasiruChamithLansakara/<new-repo-name>.git
-   git branch -M main
-   git push -u origin main
-   ```
-4. **Enable GitHub Pages** in the new repo's Settings → Pages → Source → "GitHub Actions".
-5. **Run the deploy workflow.** `.github/workflows/deploy.yml` is already set up but only runs manually (`workflow_dispatch`) so nothing auto-publishes. Trigger it from the Actions tab when you're ready, or add a `push` trigger to automate future deploys.
-6. **Verify the live URL**, then — only when you're happy with it — update any external links (LinkedIn, CV, resume, etc.) to point at the new V2 URL. V1 keeps working at its existing URL until you choose to change or remove it.
+Live at **https://yasiruchamithlansakara.github.io/portfolio_v2/**. [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) builds and publishes the site on every push to `main` (and can be re-run by hand from the Actions tab).
+
+One-time setup in the repository's settings:
+
+1. **Pages** → Build and deployment → Source → **GitHub Actions**.
+2. **Secrets and variables → Actions** → New repository secret named `VITE_FORMSPREE_ENDPOINT`, with the same value as in `.env.local`. Without it the live contact form falls back to `mailto:`.
+
+After that, `git push` deploys. Once the live site checks out, point external links (LinkedIn, CV, GitHub profile) at the new URL; V1 stays live at its own URL until you retire it.
 
 ## Project structure
 

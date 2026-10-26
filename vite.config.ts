@@ -2,9 +2,9 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
 
-// Base path matches the GitHub Pages repo path (username.github.io/portfolio/).
-// Update this if the repository is created under a different name.
+// Base path matches the GitHub Pages repo path (username.github.io/portfolio_v2/).
+// Update this, and the absolute URLs in index.html and public/, if the repository is renamed.
 export default defineConfig({
-  base: '/portfolio/',
+  base: '/portfolio_v2/',
   plugins: [react(), tailwindcss()],
 })
