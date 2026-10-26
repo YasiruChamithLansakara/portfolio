@@ -1,11 +1,9 @@
-import { ArrowUp, Mail } from 'lucide-react'
-import { personal, socialLinks } from '../data/portfolio'
+import { ArrowUp } from 'lucide-react'
+import { personal } from '../data/portfolio'
 import { Container } from './Container'
-import { GithubIcon, LinkedinIcon } from './icons/BrandIcons'
+import { SocialIconLinks, iconButtonClass } from './SocialIconLinks'
 
 const currentYear = new Date().getFullYear()
-
-const socialIcon = { github: GithubIcon, linkedin: LinkedinIcon, email: Mail }
 
 export function Footer() {
   return (
@@ -15,28 +13,11 @@ export function Footer() {
           © {currentYear} {personal.name}. All rights reserved.
         </p>
 
+        {/* The divider sets back-to-top apart, so it doesn't read as a fourth social link. */}
         <div className="flex items-center gap-4">
-          {socialLinks.map((link) => {
-            const Icon = socialIcon[link.icon]
-            const isExternal = link.icon !== 'email'
-            return (
-              <a
-                key={link.label}
-                href={link.url}
-                target={isExternal ? '_blank' : undefined}
-                rel={isExternal ? 'noreferrer' : undefined}
-                aria-label={link.label}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink-muted transition-colors hover:border-violet hover:text-violet"
-              >
-                <Icon className="h-4 w-4" aria-hidden="true" />
-              </a>
-            )
-          })}
-          <a
-            href="#home"
-            aria-label="Back to top"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-line text-ink-muted transition-colors hover:border-violet hover:text-violet"
-          >
+          <SocialIconLinks />
+          <span aria-hidden="true" className="h-6 w-px bg-line" />
+          <a href="#home" aria-label="Back to top" className={iconButtonClass}>
             <ArrowUp className="h-4 w-4" aria-hidden="true" />
           </a>
         </div>

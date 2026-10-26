@@ -1,12 +1,10 @@
 import { motion, useReducedMotion } from 'motion/react'
-import { ArrowDown, Download, Mail } from 'lucide-react'
-import { personal, socialLinks } from '../data/portfolio'
+import { ArrowDown, Download } from 'lucide-react'
+import { personal } from '../data/portfolio'
 import { useRoleRotator } from '../hooks/useRoleRotator'
 import { Container } from './Container'
-import { GithubIcon, LinkedinIcon } from './icons/BrandIcons'
 import { NetworkArtwork } from './NetworkArtwork'
-
-const socialIcon = { github: GithubIcon, linkedin: LinkedinIcon, email: Mail }
+import { SocialIconLinks } from './SocialIconLinks'
 
 export function Hero() {
   const role = useRoleRotator(personal.roles)
@@ -70,24 +68,7 @@ export function Hero() {
             )}
           </div>
 
-          <div className="mt-9 flex items-center gap-4">
-            {socialLinks.map((link) => {
-              const Icon = socialIcon[link.icon]
-              const isExternal = link.icon !== 'email'
-              return (
-                <a
-                  key={link.label}
-                  href={link.url}
-                  target={isExternal ? '_blank' : undefined}
-                  rel={isExternal ? 'noreferrer' : undefined}
-                  aria-label={link.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-line text-ink-muted transition-colors hover:border-violet hover:text-violet"
-                >
-                  <Icon className="h-4 w-4" aria-hidden="true" />
-                </a>
-              )
-            })}
-          </div>
+          <SocialIconLinks className="mt-9" />
         </motion.div>
 
         <motion.div
